@@ -7,7 +7,7 @@ import React from "react";
 
 const defaultTodos = [
   {text: "Cortar cebolla", completed: true},
-  {text: "tomar curso de react", completed: false},
+  {text: "tomar curso de react", completed: true},
   {text: "llorar con la llorona", completed: false},
   {text: "renderizando arrays", completed: false},
 ]
@@ -29,7 +29,6 @@ function App() {
       </TodoList>
 
       <CreateTodoButton />
-    {/* </div> */}
     </>
 );
 }

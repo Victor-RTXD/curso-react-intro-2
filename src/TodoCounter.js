@@ -10,7 +10,12 @@ function TodoCounter({completed, total}) {
       //  }}>
       //  Haz completado {completed} de {total} todos</h1>
 
-      <h1 className='TodoCounter'>Haz completado {completed} de {total} todos</h1>
+      <h1 className='TodoCounter'>Haz completado 
+      <span> {completed} </span> 
+      de 
+      <span> {total} </span> 
+      todos
+      </h1>
     );
 }
 
