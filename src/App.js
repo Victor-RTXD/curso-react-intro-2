@@ -14,10 +14,6 @@ const defaultTodos = [
 ]
 
 function App() {
-  // Este es el estado de TodoSearch
-  const [searchValue, setSearchValue] = React.useState("")
-  console.log("los usuarios buscan todos de: " + searchValue);
-
   // Este es el estado de TodoItem
   const [todos, setTodos] = React.useState(defaultTodos);
   console.log("nuevo todo: " + todos);
@@ -27,6 +23,14 @@ function App() {
   ).length
   const totalTodos = todos.length;
 
+  // Este es el estado de TodoSearch
+  const [searchValue, setSearchValue] = React.useState("")
+  console.log("los usuarios buscan todos de: " + searchValue.toLowerCase());
+  
+  const searchedTodos = todos.filter(
+    (todo) => todo.text.toLowerCase().includes(searchValue)
+  );
+
   return (
     <>
       <TodoCounter completed={completedTodos} total={totalTodos}/>
@@ -34,7 +38,7 @@ function App() {
 
       <TodoList>
         {/* aqui vamos a renderizar un array defaultTodos.map() a partir de un array defaultTodos */}
-        {defaultTodos.map(todo => (
+        {searchedTodos.map(todo => (
           // Cada componente dentro de un array debe tener una key unica
          <TodoItem key={todo.text} text={todo.text} completed={todo.completed} /> 
         ))}
