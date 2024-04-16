@@ -31,6 +31,24 @@ function App() {
     (todo) => todo.text.toLowerCase().includes(searchValue)
   );
 
+  const completeTodo = (text) => {
+    const newTodos = [...todos];
+    const todoIndex = newTodos.findIndex(
+      todo => todo.text === text
+    );
+    newTodos[todoIndex].completed = true;
+    setTodos(newTodos);
+  }
+
+  const deleteTodo = (text) => {
+    const newTodos = [...todos];
+    const todoIndex = newTodos.findIndex(
+      todo => todo.text === text
+    );
+    newTodos.splice(todoIndex, 1);
+    setTodos(newTodos);
+  }
+
   return (
     <>
       <TodoCounter completed={completedTodos} total={totalTodos}/>
@@ -40,7 +58,7 @@ function App() {
         {/* aqui vamos a renderizar un array defaultTodos.map() a partir de un array defaultTodos */}
         {searchedTodos.map(todo => (
           // Cada componente dentro de un array debe tener una key unica
-         <TodoItem key={todo.text} text={todo.text} completed={todo.completed} /> 
+         <TodoItem key={todo.text} text={todo.text} completed={todo.completed} onComplete={() => completeTodo(todo.text)} onDelete={() => deleteTodo(todo.text)}/> 
         ))}
       </TodoList>
 
