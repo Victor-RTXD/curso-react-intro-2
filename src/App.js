@@ -6,7 +6,7 @@ import { CreateTodoButton } from "./CreateTodoButton";
 import React from "react";
 
 const defaultTodos = [
-  {text: "Cortar cebolla", completed: true},
+  {text: "Cortar cebolla", completed: true}, 
   {text: "tomar curso de react", completed: true},
   {text: "llorar con la llorona", completed: false},
   {text: "renderizando arrays", completed: false},
@@ -36,7 +36,7 @@ function App() {
     const todoIndex = newTodos.findIndex(
       todo => todo.text === text
     );
-    newTodos[todoIndex].completed = true;
+    newTodos[todoIndex].completed = !newTodos[todoIndex].completed;
     setTodos(newTodos);
   }
 
