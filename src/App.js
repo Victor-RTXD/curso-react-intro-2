@@ -5,17 +5,29 @@ import { TodoItem } from './TodoItem';
 import { CreateTodoButton } from "./CreateTodoButton";
 import React from "react";
 
-const defaultTodos = [
-  {text: "Cortar cebolla", completed: true}, 
-  {text: "tomar curso de react", completed: true},
-  {text: "llorar con la llorona", completed: false},
-  {text: "renderizando arrays", completed: false},
-  {text: "memeando con chascarrillos", completed: true},
-]
+// const defaultTodos = [
+//   {text: "Cortar cebolla", completed: true}, 
+//   {text: "tomar curso de react", completed: true},
+//   {text: "llorar con la llorona", completed: false},
+//   {text: "renderizando arrays", completed: false},
+//   {text: "memeando con chascarrillos", completed: true},
+// ]
+
+// localStorage.setItem('todos_v1', JSON.stringify())
 
 function App() {
+  const localStorageTodos = localStorage.getItem('todos_v1');
+  let parsedTodos = JSON.parse(localStorageTodos);
+
+  if (localStorageTodos) {
+    parsedTodos = JSON.parse(localStorageTodos)
+  } else {
+    localStorage.setItem("todos_v1", JSON.stringify([]))
+    parsedTodos = [];
+  }
+
   // Este es el estado de TodoItem
-  const [todos, setTodos] = React.useState(defaultTodos);
+  const [todos, setTodos] = React.useState(parsedTodos);
   console.log("nuevo todo: " + todos);
 
   const completedTodos = todos.filter(
@@ -31,13 +43,18 @@ function App() {
     (todo) => todo.text.toLowerCase().includes(searchValue)
   );
 
+  const saveTodos = (newTodos) => {
+    setTodos(newTodos)
+    localStorage.setItem("todos_v1", JSON.stringify(newTodos))
+  }
+
   const completeTodo = (text) => {
     const newTodos = [...todos];
     const todoIndex = newTodos.findIndex(
       todo => todo.text === text
     );
     newTodos[todoIndex].completed = !newTodos[todoIndex].completed;
-    setTodos(newTodos);
+    saveTodos(newTodos);
   }
 
   const deleteTodo = (text) => {
@@ -46,7 +63,7 @@ function App() {
       todo => todo.text === text
     );
     newTodos.splice(todoIndex, 1);
-    setTodos(newTodos);
+    saveTodos(newTodos);
   }
 
   return (
