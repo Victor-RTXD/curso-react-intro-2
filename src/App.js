@@ -12,22 +12,33 @@ import React from "react";
 //   {text: "renderizando arrays", completed: false},
 //   {text: "memeando con chascarrillos", completed: true},
 // ]
-
 // localStorage.setItem('todos_v1', JSON.stringify())
 
-function App() {
-  const localStorageTodos = localStorage.getItem('todos_v1');
-  let parsedTodos = JSON.parse(localStorageTodos);
+// Esto es un custom hook
+function useLocalStorage(itemName, initialValue) {
+  const localStorageItem = localStorage.getItem(itemName);
+  let parsedItem;
 
-  if (localStorageTodos) {
-    parsedTodos = JSON.parse(localStorageTodos)
+  if (localStorageItem) {
+    parsedItem = JSON.parse(localStorageItem)
   } else {
-    localStorage.setItem("todos_v1", JSON.stringify([]))
-    parsedTodos = [];
+    localStorage.setItem(itemName, JSON.stringify(initialValue))
+    parsedItem = initialValue;
   }
 
+  const [item, setItem] = React.useState(parsedItem);
+
+  const saveItem = (newItem) => {
+    setItem(newItem)
+    localStorage.setItem("todos_v1", JSON.stringify(newItem))
+  };
+
+  return [item, saveItem]
+}
+
+function App() {
   // Este es el estado de TodoItem
-  const [todos, setTodos] = React.useState(parsedTodos);
+  const [todos, saveTodos] = useLocalStorage('todos_v1', []);
   console.log("nuevo todo: " + todos);
 
   const completedTodos = todos.filter(
@@ -42,11 +53,6 @@ function App() {
   const searchedTodos = todos.filter(
     (todo) => todo.text.toLowerCase().includes(searchValue)
   );
-
-  const saveTodos = (newTodos) => {
-    setTodos(newTodos)
-    localStorage.setItem("todos_v1", JSON.stringify(newTodos))
-  }
 
   const completeTodo = (text) => {
     const newTodos = [...todos];
