@@ -4,26 +4,18 @@ import React from "react";
 
 function App() {
   // Este es el estado de TodoItem
-  const [todos, saveTodos] = useLocalStorage('todos_v1', []);
+  const {
+    item: todos,
+    saveItem: saveTodos,
+    loading, 
+    error
+  } = useLocalStorage('todos_v1', []);
   // console.log("nuevo todo: " + todos);
 
   const completedTodos = todos.filter(
     (todo) => todo.completed
   ).length
   const totalTodos = todos.length;
-
-  console.log('log 1');
-
-  React.useEffect(() => {
-    console.log('l0000000000og 2');
-  });
-
-  React.useEffect(() => {
-    console.log('l0000000000og 2.5');
-  }, [totalTodos]);
-
-  console.log('log 3');
-
   
   // Este es el estado de TodoSearch
   const [searchValue, setSearchValue] = React.useState("")
@@ -53,6 +45,8 @@ function App() {
 
   return(
     <AppUI 
+    loading={loading}
+    error={error}
     completedTodos={completedTodos}
     totalTodos={totalTodos}
     searchValue={searchValue}
