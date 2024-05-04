@@ -14,7 +14,8 @@ function AppUI() {
             <TodoCounter />
             <TodoSearch />
 
-            <TodoContext.Consumer>
+            {/* esta forma de usar context se puede cambiar por useContext y hacerlo mas elegante, pero lo mantendre para recordar como implementarlo */}
+            <TodoContext.Consumer> 
                 {({
                     loading,
                     error,
