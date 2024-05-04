@@ -14,12 +14,14 @@ function TodoProvider({ children }) {
 
   const completedTodos = todos.filter(
     (todo) => todo.completed
-  ).length
+  ).length;
   const totalTodos = todos.length;
   
   // Este es el estado de TodoSearch
-  const [searchValue, setSearchValue] = React.useState("")
+  const [searchValue, setSearchValue] = React.useState("");
   // console.log("los usuarios buscan todos de: " + searchValue.toLowerCase());
+
+  const [openModal, setOpenModal] = React.useState(false);
   
   const searchedTodos = todos.filter(
     (todo) => todo.text.toLowerCase().includes(searchValue)
@@ -53,6 +55,8 @@ function TodoProvider({ children }) {
             searchedTodos,
             completeTodo,
             deleteTodo,
+            openModal,
+            setOpenModal,
         }}>
             {children}
         </TodoContext.Provider>
