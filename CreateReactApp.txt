@@ -1,0 +1,2 @@
+npx create-react-app cratest
+//donde cratest puede ser cualquier nombre del proyecto
